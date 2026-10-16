@@ -1,0 +1,23 @@
+Aquí tienes el prompt actualizado para React con la sentencia agregada, manteniendo exactamente la misma estructura y diseño:
+
+### Prompt para React:
+
+> "Actúa como un desarrollador experto en React. Necesito que actualices el icono de la página (favicon) y el logo principal en mi proyecto utilizando la imagen ubicada en:
+> `D:\diseño\cca diseño oficial 2026\recursos\logo-azul.png`
+> Por favor, haz lo siguiente:
+> 1. **Para el logo de la aplicación**: Muéstrame cómo importar la imagen correctamente en el componente correspondiente (por ejemplo, en `Header.jsx`, `Navbar.jsx` o `App.jsx`) usando módulos de ES6 (`import logo from ...` o la ruta adecuada dentro de la carpeta `src` / `public`), y cómo estructurar la etiqueta `<img src={...} alt="CCA Logo" />` con sus respectivos estilos CSS/Tailwind si es necesario.
+> 2. **Para el favicon (icono de la pestaña)**: Explícame o modifícame el archivo `public/index.html` (o el sistema de rutas de tu template de React) para que la etiqueta `<link rel="icon" href="..." />` apunte al nuevo recurso o su copia equivalente en la carpeta `public`.
+> 3. **Mantener interfaz**: Aplica todos los cambios respetando y manteniendo intactos el diseño visual, la estructura CSS y los estilos existentes sin realizar ninguna modificación al diseño.
+> 
+> 
+
+---
+
+### 💡 Nota importante para trabajar en React:
+
+Recuerda que React (Webpack, Vite, Next.js, etc.) no puede leer archivos directamente desde rutas absolutas del disco duro de tu computadora (`D:\...`) en tiempo de ejecución.
+
+Para que tu proyecto funcione bien:
+
+1. **Copia el archivo** `logo-azul.png` dentro de tu proyecto de React (usualmente en la carpeta `public/` o dentro de `src/assets/`).
+2. Luego, en tu prompt puedes cambiar la ruta local por la ruta dentro del proyecto, por ejemplo: `src/assets/logo-azul.png` o `/logo-azul.png` en la carpeta `public`.
