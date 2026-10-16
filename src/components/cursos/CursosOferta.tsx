@@ -15,7 +15,6 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import logo from "@/assets/logo-azul.png";
 import {
   catalog,
   launches,
@@ -34,7 +33,7 @@ import { CourseCard } from "@/components/shared/CourseCard";
 import { FilterChips } from "@/components/shared/FilterChips";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Icon } from "@/components/shared/Icon";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { Navbar } from "@/components/layout/Navbar";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,37 +86,11 @@ export function CursosOferta() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Barra superior propia de la página (aislada del menú principal) */}
-      <header className="glass-strong sticky top-0 z-50 border-b border-border/70">
-        <Container className="flex h-16 items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="flex items-center justify-center rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-black/5 dark:ring-white/10">
-              <Image src={logo} alt="CCA Logo" className="h-9 w-auto object-contain" loading="eager" fetchPriority="high" />
-            </span>
-            <span className="hidden flex-col leading-none sm:flex">
-              <span className="font-display text-sm font-bold text-primary dark:text-white">
-                Cursos e Inscripciones
-              </span>
-              <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Diseño Gráfico y Animación
-              </span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-              <a href="/">
-                <ArrowLeft className="size-4" aria-hidden /> Volver al inicio
-              </a>
-            </Button>
-            <ThemeToggle />
-          </div>
-        </Container>
-      </header>
+      <Navbar />
 
       {/* Portada */}
       <section
-        className="relative overflow-hidden bg-surface-soft pt-16 pb-14 text-foreground dark:bg-dark-background dark:text-white md:pt-20 md:pb-20"
+        className="relative overflow-hidden bg-surface-soft pt-32 pb-14 text-foreground dark:bg-dark-background dark:text-white md:pt-36 md:pb-20"
         aria-labelledby="cursos-titulo"
       >
         <div className="absolute inset-0 bg-grid-light opacity-70 dark:bg-grid dark:opacity-25" aria-hidden />

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, LockKeyhole, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/mockData";
@@ -39,6 +39,8 @@ const moreLinks = [
 
 export function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#inicio");
@@ -83,6 +85,12 @@ export function Navbar() {
 
   const goTo = (href: string) => {
     setMenuOpen(false);
+
+    if (!isHome) {
+      router.push(`/${href}`);
+      return;
+    }
+
     window.setTimeout(() => {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
@@ -126,16 +134,27 @@ export function Navbar() {
         <ul className="ml-auto hidden items-center gap-0.5 lg:flex">
           {primaryLinks.map((link) => {
             const isRoute = link.href.startsWith("/");
-            const isActive = !isRoute && activeSection === link.href;
+            const isActive = isRoute ? pathname === link.href : activeSection === link.href;
 
             return (
               <li key={link.href}>
                 {isRoute ? (
                   <Link
                     href={link.href}
-                    className="relative rounded-lg px-3 py-2 text-[13px] font-semibold text-blue-100 transition-colors hover:text-white"
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "relative rounded-lg px-3 py-2 text-[13px] font-semibold transition-colors",
+                      isActive ? "text-white" : "text-blue-100 hover:text-white"
+                    )}
                   >
-                    {link.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-lg bg-white/12 ring-1 ring-white/15"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      />
+                    )}
+                    <span className="relative">{link.label}</span>
                   </Link>
                 ) : (
                   <button
@@ -228,7 +247,7 @@ export function Navbar() {
               <ul className="grid gap-1 sm:grid-cols-2">
                 {navLinks.map((link, index) => {
                   const isRoute = link.href.startsWith("/");
-                  const isActive = !isRoute && activeSection === link.href;
+                  const isActive = isRoute ? pathname === link.href : activeSection === link.href;
 
                   return (
                     <motion.li
@@ -241,7 +260,13 @@ export function Navbar() {
                         <Link
                           href={link.href}
                           onClick={() => setMenuOpen(false)}
-                          className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold text-slate-200 transition-colors hover:bg-white/5 hover:text-white"
+                          aria-current={isActive ? "page" : undefined}
+                          className={cn(
+                            "flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold transition-colors",
+                            isActive
+                              ? "bg-white/10 text-secondary ring-1 ring-white/10"
+                              : "text-slate-200 hover:bg-white/5 hover:text-white"
+                          )}
                         >
                           {link.label}
                           <ArrowRight className="size-4" aria-hidden />
