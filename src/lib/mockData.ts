@@ -480,6 +480,7 @@ export const contactInfo = {
 
 export const navLinks = [
   { label: "Inicio", href: "#inicio" },
+  { label: "Oferta académica", href: "/oferta-academica" },
   { label: "Carrera", href: "#carrera" },
   { label: "Plan de estudios", href: "#plan-estudios" },
   { label: "Docentes", href: "#docentes" },
