@@ -1,5 +1,3 @@
-"use client";
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/layout/Hero";
 import { Footer } from "@/components/layout/Footer";
@@ -21,16 +19,17 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 
-/**
- * Portal institucional de la Licenciatura en Diseño Gráfico y Animación.
- * Las secciones se alimentan de datos mock (src/lib/mockData.ts) listos
- * para sustituirse por una API o CMS manteniendo las mismas interfaces.
- */
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <a
+        href="#contenido-principal"
+        className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-xl bg-secondary px-4 py-2 text-sm font-bold text-primary shadow-lg transition-transform focus:translate-y-0"
+      >
+        Saltar al contenido
+      </a>
       <Navbar />
-      <main className="flex-1">
+      <main id="contenido-principal" className="flex-1">
         <Hero />
         <QuickInfo />
         <WhyStudy />

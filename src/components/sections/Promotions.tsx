@@ -5,21 +5,26 @@ import { BadgeCheck } from "lucide-react";
 import { promotions } from "@/lib/mockData";
 import { Icon } from "@/components/shared/Icon";
 import { SectionTitle } from "@/components/shared/SectionTitle";
+import { SectionShell } from "@/components/shared/SectionShell";
+import { CourseCard } from "@/components/shared/CourseCard";
+import { Container } from "@/components/shared/Container";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-/**
- * Promociones y beneficios destacados con tarjetas llamativas.
- * Datos: GET /api/promociones.
- */
 export function Promotions() {
   return (
-    <section
-      className="relative overflow-hidden bg-slate-50 py-20 md:py-28"
+    <SectionShell
+      id="promociones"
+      tone="muted"
+      className="overflow-hidden"
+      contentClassName="max-w-none p-0 px-0 sm:px-0 lg:px-0"
       aria-label="Promociones y beneficios"
     >
-      <div className="absolute -left-32 top-1/4 h-80 w-80 rounded-full bg-violet-200/50 blur-3xl" aria-hidden />
-      <div className="absolute -right-32 bottom-1/4 h-80 w-80 rounded-full bg-fuchsia-200/40 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-grid-light opacity-40" aria-hidden />
+      <div className="pointer-events-none absolute -left-32 top-1/4 h-80 w-80 rounded-full bg-primary/10 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -right-32 bottom-1/4 h-80 w-80 rounded-full bg-secondary/20 blur-3xl" aria-hidden />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionTitle
           eyebrow="Promociones"
           title="Beneficios y"
@@ -27,61 +32,49 @@ export function Promotions() {
           description="Aprovecha los descuentos y beneficios vigentes para nuevos ingresos y estudiantes actuales de la carrera."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {promotions.map((promo, i) => (
             <motion.article
               key={promo.id}
-              initial={{ opacity: 0, y: 34 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.55, delay: (i % 3) * 0.1 }}
-              className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 to-ink-700 p-[1.5px] shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-soft-lg"
+              transition={{ duration: 0.45, delay: (i % 3) * 0.08 }}
+              className="h-full"
             >
-              {/* Borde con gradiente */}
-              <div className="rounded-[calc(1.5rem-1.5px)] bg-white p-6 h-full flex flex-col">
-                <div className="flex items-start justify-between gap-4">
-                  <div
-                    className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${promo.gradient} p-3.5 text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6`}
-                  >
-                    <Icon name={promo.icon} className="h-6 w-6" />
-                  </div>
-                  <span
-                    className={`rounded-2xl bg-gradient-to-r ${promo.gradient} px-4 py-2 font-display text-xl font-bold text-white shadow-lg`}
-                  >
+              <CourseCard
+                title={promo.title}
+                description={promo.description}
+                icon={<Icon name={promo.icon} className="h-6 w-6" />}
+                badge={
+                  <Badge variant="secondary" className="font-display text-base">
                     {promo.discount}
-                  </span>
-                </div>
-
-                <h3 className="mt-5 font-display text-lg font-bold text-ink-900">
-                  {promo.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
-                  {promo.description}
-                </p>
-
-                <dl className="mt-5 space-y-2 rounded-2xl bg-slate-50 p-4 text-[13px]">
-                  <div className="flex items-center justify-between gap-3">
-                    <dt className="text-slate-500">Vigencia</dt>
-                    <dd className="font-semibold text-ink-900 text-right">{promo.validity}</dd>
+                  </Badge>
+                }
+                meta={
+                  <div className="space-y-4">
+                    <dl className="rounded-2xl border border-border/70 bg-surface p-4 text-[13px]">
+                      <div className="flex items-center justify-between gap-3">
+                        <dt className="text-muted-foreground">Vigencia</dt>
+                        <dd className="text-right font-semibold text-foreground">{promo.validity}</dd>
+                      </div>
+                      <div className="mt-2 border-t border-border/70 pt-2">
+                        <dt className="mb-1 text-muted-foreground">Condiciones</dt>
+                        <dd className="leading-relaxed text-muted-foreground">{promo.conditions}</dd>
+                      </div>
+                    </dl>
+                    <Button type="button" variant="accent" className="w-full">
+                      <BadgeCheck className="h-4 w-4" aria-hidden />
+                      Conocer promoción
+                    </Button>
                   </div>
-                  <div className="border-t border-slate-200/70 pt-2">
-                    <dt className="text-slate-500 mb-1">Condiciones</dt>
-                    <dd className="text-slate-600 leading-relaxed">{promo.conditions}</dd>
-                  </div>
-                </dl>
-
-                <button
-                  type="button"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 py-2.5 text-sm font-semibold text-white opacity-90 transition-all hover:opacity-100 hover:scale-[1.02] cursor-pointer"
-                >
-                  <BadgeCheck className="h-4 w-4" aria-hidden />
-                  Conocer promoción
-                </button>
-              </div>
+                }
+                className="h-full [&>p]:flex-1"
+              />
             </motion.article>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </SectionShell>
   );
 }

@@ -217,3 +217,21 @@ export interface QuickFact {
   sub: string;
   icon: string;
 }
+
+export interface HeroStat {
+  value: string;
+  label: string;
+}
+
+export interface StudentClub {
+  title: string;
+  description: string;
+  icon: string;
+  gradient: string;
+}
+
+export interface JobMarketSummary {
+  employability: number;
+  professionalAreas: number;
+  industryPartners: number;
+}

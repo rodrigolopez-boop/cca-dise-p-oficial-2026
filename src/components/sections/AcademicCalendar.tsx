@@ -1,11 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { calendarEvents } from "@/lib/mockData";
 import type { CalendarCategory } from "@/types";
+import { Container } from "@/components/shared/Container";
+import { SectionShell } from "@/components/shared/SectionShell";
 import { SectionTitle } from "@/components/shared/SectionTitle";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const DAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
@@ -15,13 +20,13 @@ const MONTHS = [
 ];
 
 const categoryConfig: Record<CalendarCategory, { label: string; dot: string; chip: string }> = {
-  semestre: { label: "Semestre", dot: "bg-violet-500", chip: "bg-violet-100 text-violet-700" },
-  inscripcion: { label: "Inscripciones", dot: "bg-cyan-500", chip: "bg-cyan-100 text-cyan-700" },
-  examenes: { label: "Exámenes", dot: "bg-rose-500", chip: "bg-rose-100 text-rose-700" },
-  vacaciones: { label: "Vacaciones", dot: "bg-emerald-500", chip: "bg-emerald-100 text-emerald-700" },
-  proyectos: { label: "Proyectos", dot: "bg-amber-500", chip: "bg-amber-100 text-amber-700" },
-  eventos: { label: "Eventos", dot: "bg-fuchsia-500", chip: "bg-fuchsia-100 text-fuchsia-700" },
-  convocatorias: { label: "Convocatorias", dot: "bg-indigo-500", chip: "bg-indigo-100 text-indigo-700" },
+  semestre: { label: "Semestre", dot: "bg-primary", chip: "border-primary/20 bg-primary/10 text-primary dark:bg-primary/20 dark:text-foreground" },
+  inscripcion: { label: "Inscripciones", dot: "bg-info", chip: "border-info/20 bg-info/10 text-info dark:bg-info/20 dark:text-foreground" },
+  examenes: { label: "Exámenes", dot: "bg-error", chip: "border-error/20 bg-error/10 text-error dark:bg-error/20 dark:text-foreground" },
+  vacaciones: { label: "Vacaciones", dot: "bg-success", chip: "border-success/20 bg-success/10 text-success dark:bg-success/20 dark:text-foreground" },
+  proyectos: { label: "Proyectos", dot: "bg-warning", chip: "border-warning/20 bg-warning/10 text-warning dark:bg-warning/20 dark:text-foreground" },
+  eventos: { label: "Eventos", dot: "bg-secondary", chip: "border-secondary/30 bg-secondary/15 text-primary dark:bg-secondary/20 dark:text-secondary" },
+  convocatorias: { label: "Convocatorias", dot: "bg-primary", chip: "border-primary/20 bg-primary/10 text-primary dark:bg-primary/20 dark:text-foreground" },
 };
 
 interface Cell {
@@ -30,24 +35,16 @@ interface Cell {
   inMonth: boolean;
 }
 
-/**
- * Calendario académico interactivo:
- * - Navegación mensual
- * - Puntos de colores por categoría de evento
- * - Panel de detalle del día seleccionado
- */
 export function AcademicCalendar() {
-  const [viewDate, setViewDate] = useState({ year: 2026, month: 8 }); // Septiembre 2026
+  const [viewDate, setViewDate] = useState({ year: 2026, month: 8 });
   const [selected, setSelected] = useState<string | null>(null);
 
   const todayIso = new Date().toISOString().slice(0, 10);
 
-  /** Construye la matriz de celdas (lunes a domingo) del mes en vista. */
   const cells: Cell[] = useMemo(() => {
     const year = viewDate.year;
     const month = viewDate.month;
     const firstDay = new Date(year, month, 1);
-    // Desplaza para que la semana inicie en lunes
     const startOffset = (firstDay.getDay() + 6) % 7;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const daysPrevMonth = new Date(year, month, 0).getDate();
@@ -105,8 +102,14 @@ export function AcademicCalendar() {
   };
 
   return (
-    <section id="calendario" className="relative py-20 md:py-28" aria-label="Calendario académico">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionShell
+      id="calendario"
+      tone="default"
+      className="overflow-hidden"
+      contentClassName="max-w-none p-0 px-0 sm:px-0 lg:px-0"
+      aria-label="Calendario académico"
+    >
+      <Container>
         <SectionTitle
           eyebrow="Calendario"
           title="Calendario"
@@ -114,46 +117,50 @@ export function AcademicCalendar() {
           description="Inicio de semestres, inscripciones, exámenes, vacaciones y eventos importantes. Navega por mes y consulta el detalle de cada fecha."
         />
 
-        <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-          {/* Panel del calendario */}
-          <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft sm:p-7">
-            {/* Encabezado con navegación */}
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="flex items-center gap-2.5 font-display text-xl font-bold text-ink-900 sm:text-2xl">
-                <CalendarDays className="h-6 w-6 text-violet-600" aria-hidden />
-                {MONTHS[viewDate.month]} {viewDate.year}
-              </h3>
-              <div className="flex gap-2">
-                <button
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.65fr)_minmax(20rem,1fr)] xl:gap-8">
+          <Card className="gap-0 rounded-2xl border-border/80 bg-card p-3 shadow-card dark:bg-dark-card sm:p-6">
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary text-secondary shadow-card" aria-hidden>
+                  <CalendarDays className="size-5" />
+                </span>
+                <h3 className="min-w-0 font-display text-xl font-bold text-foreground sm:text-2xl">
+                  {MONTHS[viewDate.month]} {viewDate.year}
+                </h3>
+              </div>
+              <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto">
+                <Button
                   type="button"
+                  size="icon"
+                  variant="outline"
                   onClick={() => moveMonth(-1)}
                   aria-label="Mes anterior"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50 cursor-pointer"
+                  className="cursor-pointer"
                 >
-                  <ChevronLeft className="h-4 w-4" aria-hidden />
-                </button>
-                <button
+                  <ChevronLeft className="size-4" aria-hidden />
+                </Button>
+                <Button
                   type="button"
+                  size="icon"
+                  variant="outline"
                   onClick={() => moveMonth(1)}
                   aria-label="Mes siguiente"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-all hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50 cursor-pointer"
+                  className="cursor-pointer"
                 >
-                  <ChevronRight className="h-4 w-4" aria-hidden />
-                </button>
+                  <ChevronRight className="size-4" aria-hidden />
+                </Button>
               </div>
             </div>
 
-            {/* Días de la semana */}
-            <div className="mb-2 grid grid-cols-7 gap-1.5">
+            <div className="mb-2 grid grid-cols-7 gap-1 sm:gap-1.5" role="row">
               {DAY_LABELS.map((d) => (
-                <div key={d} className="py-1 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                <div key={d} role="columnheader" className="py-1 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:text-[11px]">
                   {d}
                 </div>
               ))}
             </div>
 
-            {/* Cuadrícula de días */}
-            <div className="grid grid-cols-7 gap-1.5" role="grid" aria-label={`Días de ${MONTHS[viewDate.month]} ${viewDate.year}`}>
+            <div className="grid grid-cols-7 gap-1 sm:gap-1.5" role="grid" aria-label={`Días de ${MONTHS[viewDate.month]} ${viewDate.year}`}>
               {cells.map((cell, idx) => {
                 const dayEvents = eventsByDate.get(cell.iso) ?? [];
                 const isToday = cell.iso === todayIso;
@@ -164,24 +171,24 @@ export function AcademicCalendar() {
                     type="button"
                     role="gridcell"
                     aria-label={`${cell.day} de ${MONTHS[viewDate.month]}, ${dayEvents.length} eventos`}
+                    aria-selected={isSelected}
+                    aria-current={isToday ? "date" : undefined}
                     onClick={() => setSelected(dayEvents.length > 0 ? cell.iso : null)}
                     className={cn(
-                      "relative flex aspect-square flex-col items-center justify-center rounded-xl text-sm transition-all duration-200",
-                      cell.inMonth
-                        ? "text-ink-900 hover:bg-violet-50"
-                        : "text-slate-300",
-                      isSelected && "bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white shadow-glow-violet scale-105",
-                      isToday && !isSelected && "ring-2 ring-fuchsia-400 bg-fuchsia-50 font-bold",
-                      dayEvents.length > 0 && !isSelected && "font-bold cursor-pointer bg-slate-50 hover:bg-violet-100"
+                      "relative flex aspect-square min-w-0 flex-col items-center justify-center rounded-xl text-xs font-semibold transition-all duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25 sm:text-sm",
+                      cell.inMonth ? "text-foreground hover:bg-accent" : "text-muted-foreground/50",
+                      dayEvents.length > 0 && !isSelected && "cursor-pointer bg-surface-soft font-bold hover:bg-accent",
+                      isToday && !isSelected && "bg-secondary/20 font-bold text-primary ring-2 ring-secondary",
+                      isSelected && "scale-[1.03] bg-primary text-primary-foreground shadow-card-hover ring-2 ring-secondary"
                     )}
                   >
                     {cell.day}
                     {dayEvents.length > 0 && (
-                      <span className="absolute bottom-1.5 flex gap-0.5" aria-hidden>
+                      <span className="absolute bottom-1 flex gap-0.5" aria-hidden>
                         {dayEvents.slice(0, 3).map((ev) => (
                           <span
                             key={ev.id}
-                            className={cn("h-1.5 w-1.5 rounded-full", isSelected ? "bg-white" : categoryConfig[ev.category].dot)}
+                            className={cn("size-1.5 rounded-full", isSelected ? "bg-primary-foreground" : categoryConfig[ev.category].dot)}
                           />
                         ))}
                       </span>
@@ -191,41 +198,51 @@ export function AcademicCalendar() {
               })}
             </div>
 
-            {/* Leyenda */}
-            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-slate-100 pt-5">
+            <div className="mt-6 flex flex-wrap gap-2 border-t border-border/70 pt-5">
               {(Object.keys(categoryConfig) as CalendarCategory[]).map((cat) => (
-                <span key={cat} className="flex items-center gap-2 text-xs text-slate-500">
-                  <span className={cn("h-2.5 w-2.5 rounded-full", categoryConfig[cat].dot)} aria-hidden />
+                <Badge
+                  key={cat}
+                  variant="outline"
+                  className="border-border/70 bg-background/60 text-muted-foreground dark:border-dark-border dark:bg-dark-card dark:text-muted-foreground"
+                >
+                  <span className={cn("size-2 rounded-full", categoryConfig[cat].dot)} aria-hidden />
                   {categoryConfig[cat].label}
-                </span>
+                </Badge>
               ))}
             </div>
-          </div>
+          </Card>
 
-          {/* Panel de detalle */}
-          <div className="flex flex-col gap-6">
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-soft">
-              <h3 className="font-display text-lg font-bold text-ink-900">
-                {selected
-                  ? new Date(selected + "T12:00:00").toLocaleDateString("es-ES", {
-                      weekday: "long", day: "numeric", month: "long", year: "numeric",
-                    })
-                  : "Selecciona una fecha"}
-              </h3>
-              <p className="mt-1 text-sm text-slate-500">
+          <div className="flex min-w-0 flex-col gap-6">
+            <Card className="gap-0 rounded-2xl border-border/80 bg-card p-5 shadow-card dark:bg-dark-card sm:p-6">
+              <div className="flex items-start gap-3">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-secondary-soft text-primary dark:bg-primary/20 dark:text-secondary" aria-hidden>
+                  <CalendarDays className="size-5" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">Detalle del día</p>
+                  <h3 className="mt-1 font-display text-lg font-bold leading-snug text-foreground">
+                    {selected
+                      ? new Date(selected + "T12:00:00").toLocaleDateString("es-ES", {
+                          weekday: "long", day: "numeric", month: "long", year: "numeric",
+                        })
+                      : "Selecciona una fecha"}
+                  </h3>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                 {selected
                   ? `${selectedEvents.length} evento(s) programado(s)`
                   : "Los días con eventos muestran puntos de color. Haz clic para ver el detalle."}
               </p>
 
-              <div className="mt-5 space-y-3">
+              <div className="mt-5 space-y-3" aria-live="polite">
                 <AnimatePresence mode="popLayout">
                   {selectedEvents.length === 0 ? (
                     <motion.p
                       key="empty"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="rounded-2xl border border-dashed border-slate-200 px-4 py-8 text-center text-sm text-slate-400"
+                      className="rounded-2xl border border-dashed border-border bg-surface-soft/60 px-4 py-8 text-center text-sm text-muted-foreground dark:bg-dark-surface/60"
                     >
                       {selected ? "No hay eventos para esta fecha." : "Aquí aparecerán los eventos del día."}
                     </motion.p>
@@ -237,44 +254,46 @@ export function AcademicCalendar() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        className="rounded-2xl border border-slate-100 bg-slate-50 p-4 transition-colors hover:border-violet-200"
+                        className="rounded-2xl border border-border/80 bg-surface-soft/70 p-4 transition-colors hover:border-primary/30 dark:bg-dark-surface/70"
                       >
-                        <span className={cn("inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold", categoryConfig[ev.category].chip)}>
+                        <Badge variant="outline" className={categoryConfig[ev.category].chip}>
                           {categoryConfig[ev.category].label}
-                        </span>
-                        <p className="mt-2 text-sm font-semibold text-ink-900">{ev.title}</p>
+                        </Badge>
+                        <p className="mt-2 text-sm font-semibold text-foreground">{ev.title}</p>
                       </motion.div>
                     ))
                   )}
                 </AnimatePresence>
               </div>
-            </div>
+            </Card>
 
-            {/* Próximos eventos del mes */}
-            <div className="rounded-3xl border border-slate-100 bg-gradient-to-br from-ink-900 to-ink-700 p-6 text-white shadow-soft-lg">
-              <h3 className="font-display text-base font-bold">
-                Agenda de {MONTHS[viewDate.month]}
-              </h3>
-              <ul className="mt-4 space-y-3">
+            <Card className="gap-0 rounded-2xl border-dark-border/70 bg-dark-background p-5 text-white shadow-card sm:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="font-display text-base font-bold text-white">Agenda de {MONTHS[viewDate.month]}</h3>
+                <Badge variant="secondary" className="border-secondary/40 bg-secondary/15 text-secondary">
+                  {monthEvents.length} {monthEvents.length === 1 ? "evento" : "eventos"}
+                </Badge>
+              </div>
+              <ul className="mt-5 space-y-3">
                 {monthEvents.length === 0 ? (
-                  <li className="text-sm text-slate-400">Sin eventos este mes.</li>
+                  <li className="text-sm text-white/70">Sin eventos este mes.</li>
                 ) : (
                   monthEvents.map((ev) => (
-                    <li key={ev.id} className="flex items-center gap-3 text-sm">
-                      <span className={cn("h-2 w-2 shrink-0 rounded-full", categoryConfig[ev.category].dot)} aria-hidden />
-                      <span className="w-9 shrink-0 font-display font-bold text-fuchsia-300">
+                    <li key={ev.id} className="flex items-start gap-3 text-sm">
+                      <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", categoryConfig[ev.category].dot)} aria-hidden />
+                      <span className="w-9 shrink-0 font-display font-bold text-secondary">
                         {new Date(ev.date + "T12:00:00").getDate()}
                       </span>
-                      <span className="text-slate-200">{ev.title}</span>
+                      <span className="min-w-0 text-white/80">{ev.title}</span>
                     </li>
                   ))
                 )}
               </ul>
-            </div>
+            </Card>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </SectionShell>
   );
 }
 

@@ -4,49 +4,46 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface FilterChipsProps {
-  options: { value: string; label: string }[];
-  active: string;
-  onChange: (value: string) => void;
+interface FilterChipsProps<T extends string> {
+  options: { value: T; label: string }[];
+  active: T;
+  onChange: (value: T) => void;
   dark?: boolean;
   className?: string;
 }
 
-/**
- * Fila de chips de filtrado reutilizable (todos / categorías).
- * Indica el filtro activo con el gradiente de marca.
- */
-export function FilterChips({ options, active, onChange, dark, className }: FilterChipsProps) {
+export function FilterChips<T extends string>({
+  options,
+  active,
+  onChange,
+  dark = false,
+  className,
+}: FilterChipsProps<T>) {
   return (
-    <div
-      role="tablist"
-      aria-label="Filtros"
-      className={cn(
-        "flex flex-wrap items-center gap-2",
-        className
-      )}
-    >
-      {options.map((opt) => {
-        const isActive = active === opt.value;
+    <div aria-label="Filtros" className={cn("flex flex-wrap items-center gap-2", className)}>
+      {options.map((option) => {
+        const isActive = active === option.value;
+
         return (
           <motion.button
-            key={opt.value}
+            key={option.value}
             type="button"
-            role="tab"
-            aria-selected={isActive}
-            whileTap={{ scale: 0.94 }}
-            onClick={() => onChange(opt.value)}
+            aria-pressed={isActive}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => onChange(option.value)}
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 border cursor-pointer",
+              "inline-flex min-h-10 items-center gap-1.5 rounded-xl border px-4 py-2 text-sm font-semibold transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/15",
               isActive
-                ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white border-transparent shadow-glow-violet"
+                ? dark
+                  ? "border-secondary bg-secondary text-primary shadow-glow-magenta"
+                  : "border-primary bg-primary text-white shadow-glow-violet"
                 : dark
-                  ? "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-violet-300 hover:text-violet-700 hover:shadow-soft"
+                  ? "border-white/10 bg-white/5 text-slate-200 hover:border-secondary/30 hover:bg-white/10 hover:text-white"
+                  : "border-border bg-card text-muted-foreground hover:border-primary/30 hover:bg-accent hover:text-primary"
             )}
           >
-            {isActive && <Check className="h-3.5 w-3.5" aria-hidden />}
-            {opt.label}
+            {isActive && <Check className="size-3.5" aria-hidden />}
+            {option.label}
           </motion.button>
         );
       })}

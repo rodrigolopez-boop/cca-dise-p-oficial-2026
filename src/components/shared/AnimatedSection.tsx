@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import { useRef, type ReactNode } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -12,17 +12,13 @@ interface AnimatedSectionProps {
 }
 
 const offsets = {
-  up: { y: 42, x: 0 },
-  down: { y: -42, x: 0 },
-  left: { y: 0, x: 42 },
-  right: { y: 0, x: -42 },
+  up: { y: 32, x: 0 },
+  down: { y: -32, x: 0 },
+  left: { y: 0, x: 32 },
+  right: { y: 0, x: -32 },
   none: { y: 0, x: 0 },
 };
 
-/**
- * Envuelve una sección y anima su aparición cuando entra al viewport.
- * Motor: framer-motion (whileInView).
- */
 export function AnimatedSection({
   children,
   className,
@@ -32,15 +28,16 @@ export function AnimatedSection({
 }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once, margin: "-60px" });
+  const reduceMotion = useReducedMotion();
   const offset = offsets[direction];
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, ...offset }}
+      initial={reduceMotion ? false : { opacity: 0, ...offset }}
       animate={inView ? { opacity: 1, x: 0, y: 0 } : undefined}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

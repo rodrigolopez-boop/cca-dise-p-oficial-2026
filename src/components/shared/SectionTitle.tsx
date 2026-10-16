@@ -13,10 +13,6 @@ interface SectionTitleProps {
   className?: string;
 }
 
-/**
- * Título de sección reutilizable con eyebrow, titular y descripción.
- * `highlight` se pinta con el gradiente de marca.
- */
 export function SectionTitle({
   eyebrow,
   title,
@@ -30,37 +26,41 @@ export function SectionTitle({
     <AnimatedSection
       className={cn(
         "mb-12 md:mb-16",
-        align === "center" ? "text-center mx-auto max-w-3xl" : "text-left max-w-3xl",
+        align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl text-left",
         className
       )}
     >
       {eyebrow && (
         <span
           className={cn(
-            "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] mb-5",
+            "mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em]",
             dark
-              ? "bg-white/10 text-fuchsia-300 border border-white/15"
-              : "bg-violet-50 text-violet-700 border border-violet-100"
+              ? "border-white/15 bg-white/10 text-secondary"
+              : "border-primary/15 bg-brand-secondary-soft text-primary dark:border-primary/25 dark:bg-primary/15 dark:text-brand-secondary"
           )}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500" />
+          <span className="size-1.5 rounded-full bg-secondary" />
           {eyebrow}
         </span>
       )}
       <h2
         className={cn(
-          "font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.12] tracking-tight",
-          dark ? "text-white" : "text-ink-900"
+          "font-display text-3xl font-bold leading-[1.12] tracking-tight text-balance md:text-4xl lg:text-5xl",
+          dark ? "text-white" : "text-primary dark:text-white"
         )}
       >
-        {title}{" "}
-        {highlight && <span className="text-gradient">{highlight}</span>}
+        {title} {highlight && (
+          <span className="relative isolate inline-block text-primary dark:text-white">
+            {highlight}
+            <span className="absolute inset-x-0 bottom-0.5 -z-10 h-2.5 -rotate-1 rounded-sm bg-secondary/70" />
+          </span>
+        )}
       </h2>
       {description && (
         <p
           className={cn(
-            "mt-5 text-base md:text-lg leading-relaxed",
-            dark ? "text-slate-300" : "text-slate-600"
+            "mt-5 text-base leading-relaxed md:text-lg",
+            dark ? "text-slate-300" : "text-muted-foreground"
           )}
         >
           {description}

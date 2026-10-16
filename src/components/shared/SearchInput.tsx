@@ -1,6 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 interface SearchInputProps {
@@ -8,26 +9,29 @@ interface SearchInputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   label?: string;
+  className?: string;
 }
 
-/** Buscador reutilizable con icono y accesible por teclado. */
-export function SearchInput({ value, onChange, placeholder = "Buscar...", label }: SearchInputProps) {
+export function SearchInput({
+  value,
+  onChange,
+  placeholder = "Buscar...",
+  label,
+  className,
+}: SearchInputProps) {
   const id = `search-${label ?? placeholder}`.toLowerCase().replace(/\s+/g, "-");
+
   return (
-    <div className="relative w-full max-w-md">
-      <Search
-        className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
-        aria-hidden
-      />
-      <input
+    <div className={cn("relative w-full max-w-md", className)}>
+      <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+      <Input
         id={id}
         type="search"
-        role="searchbox"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        aria-label={placeholder}
-        className="w-full rounded-full border border-slate-200 bg-white py-2.5 pl-11 pr-5 text-sm text-ink-900 shadow-sm outline-none transition-all placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-500/10"
+        aria-label={label ?? placeholder}
+        className="h-12 rounded-xl border-border bg-card pl-11 shadow-sm placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/10"
       />
     </div>
   );

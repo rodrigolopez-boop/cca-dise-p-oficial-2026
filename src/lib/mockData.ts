@@ -14,16 +14,41 @@ import type {
   GraduationModality,
   GraduationStep,
   HonorStudent,
+  HeroStat,
+  JobMarketSummary,
   NewsItem,
   Promotion,
   QuickFact,
   Scholarship,
   Semester,
+  StudentClub,
   StudentProject,
   Teacher,
   Testimonial,
   Benefit,
 } from "@/types";
+
+/* ------------------------------------------------------------------ */
+/* Hero — indicadores rápidos y marquesina de disciplinas              */
+/* ------------------------------------------------------------------ */
+export const heroStats: HeroStat[] = [
+  { value: "+480", label: "Créditos" },
+  { value: "+40", label: "Asignaturas" },
+  { value: "15", label: "Áreas laborales" },
+];
+
+export const marqueeWords: string[] = [
+  "Branding",
+  "Motion graphics",
+  "Ilustración",
+  "Animación 2D",
+  "Animación 3D",
+  "Diseño editorial",
+  "UX/UI",
+  "Fotografía",
+  "Arte digital",
+  "Diseño web",
+];
 
 /* ------------------------------------------------------------------ */
 /* GET /api/carrera/resumen                                            */
@@ -162,6 +187,12 @@ export const careerAreas: CareerArea[] = [
   { id: "a14", title: "Freelancer", description: "Práctica independiente con clientes globales en plataformas digitales.", icon: "Laptop", gradient: "from-teal-500 to-cyan-500", demand: 92 },
   { id: "a15", title: "Emprendedor creativo", description: "Estudios propios, productos creativos y startups de diseño.", icon: "Rocket", gradient: "from-fuchsia-600 to-purple-700", demand: 75 },
 ];
+
+export const jobMarketSummary: JobMarketSummary = {
+  employability: 87,
+  professionalAreas: careerAreas.length,
+  industryPartners: 12,
+};
 
 /* ------------------------------------------------------------------ */
 /* GET /api/convocatorias                                              */
@@ -343,6 +374,16 @@ export const studentProjects: StudentProject[] = [
   { id: "s10", name: "Frame a Frame", author: "Jorge Lemus", semester: "8º semestre", category: "Animación", description: "Cortometraje en stop motion con materiales reciclados para la tesis de titulación.", gradient: "from-red-500 to-orange-500", icon: "Layers" },
   { id: "s11", name: "Mercado Vivo", author: "Karla Molina", semester: "4º semestre", category: "Fotografía", description: "Ensayo fotográfico color sobre mercados tradicionales y sus protagonistas.", gradient: "from-yellow-500 to-amber-600", icon: "Store" },
   { id: "s12", name: "Petit Banco", author: "Lucas Navarro", semester: "5º semestre", category: "Branding", description: "Rebranding bancario juvenil con tono editorial e ilustraciones financieras amigables.", gradient: "from-sky-500 to-blue-600", icon: "PiggyBank" },
+];
+
+/* ------------------------------------------------------------------ */
+/* GET /api/clubes-estudiantiles                                       */
+/* ------------------------------------------------------------------ */
+export const studentClubs: StudentClub[] = [
+  { title: "Club de Animación", description: "Screenings semanales y producción colectiva de cortos.", icon: "Clapperboard", gradient: "from-violet-600 to-fuchsia-600" },
+  { title: "Club de Fotografía", description: "Caminatas fotográficas y laboratorio analógico.", icon: "Camera", gradient: "from-cyan-500 to-blue-600" },
+  { title: "Concursos y Reconocimientos", description: "Delegación oficial en certámenes nacionales cada año.", icon: "Trophy", gradient: "from-amber-500 to-orange-600" },
+  { title: "Exposiciones Permanentes", description: "Curaduría semestral en la galería universitaria.", icon: "Frame", gradient: "from-emerald-500 to-teal-600" },
 ];
 
 /* ------------------------------------------------------------------ */

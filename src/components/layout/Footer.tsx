@@ -1,71 +1,81 @@
 "use client";
 
-import { Palette, ArrowUp } from "lucide-react";
-import { navLinks, contactInfo } from "@/lib/mockData";
+import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
+import { BrandLogo } from "@/components/shared/BrandLogo";
 import { Icon } from "@/components/shared/Icon";
+import { Button } from "@/components/ui/button";
+import { contactInfo } from "@/lib/mockData";
 
 const footerColumns = [
   {
-    title: "Carrera",
+    title: "Plataforma",
     links: [
-      { label: "Información", href: "#carrera" },
-      { label: "Plan de estudios", href: "#plan-estudios" },
-      { label: "Mercado laboral", href: "#inicio" },
-      { label: "Docentes", href: "#docentes" },
+      { label: "Inicio", href: "#inicio" },
+      { label: "La carrera", href: "#carrera" },
+      { label: "Nosotros", href: "#docentes" },
+      { label: "Contacto", href: "#contacto" },
     ],
   },
   {
-    title: "Estudiantes",
+    title: "Académico",
     links: [
+      { label: "Plan de estudios", href: "#plan-estudios" },
+      { label: "Convocatorias", href: "#convocatorias" },
       { label: "Calendario", href: "#calendario" },
-      { label: "Becas", href: "#becas" },
-      { label: "Eventos", href: "#vida-universitaria" },
       { label: "Titulación", href: "#titulacion" },
     ],
   },
   {
-    title: "Información",
+    title: "Campus",
+    links: [
+      { label: "Vida universitaria", href: "#vida-universitaria" },
+      { label: "Estudiantes", href: "#estudiantes" },
+      { label: "Docentes", href: "#docentes" },
+      { label: "Becas", href: "#becas" },
+    ],
+  },
+  {
+    title: "Recursos",
     links: [
       { label: "Noticias", href: "#noticias" },
-      { label: "Convocatorias", href: "#convocatorias" },
-      { label: "Promociones", href: "#inicio" },
-      { label: "Contacto", href: "#contacto" },
+      { label: "Promociones", href: "#promociones" },
+      { label: "Mercado laboral", href: "#mercado-laboral" },
+      { label: "Preguntas frecuentes", href: "#contacto" },
     ],
   },
 ];
 
-/**
- * Footer institucional completo con columnas de navegación, redes sociales
- * y copyright. Pegado al fondo mediante mt-auto en el layout raíz.
- */
 export function Footer() {
-  const goTo = (href: string) => document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  const goTo = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/10 bg-ink-950 text-white" aria-label="Pie de página">
+    <footer className="relative border-t border-white/10 bg-brand-primary-dark text-white dark:bg-[#041226]" aria-label="Pie de página">
       <div className="absolute inset-x-0 top-0 h-px line-gradient" aria-hidden />
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-          {/* Marca */}
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-fuchsia-600 to-orange-500">
-                <Palette className="h-5 w-5 text-white" aria-hidden />
-              </span>
-              <div className="leading-none">
-                <p className="font-display text-[15px] font-bold">Diseño Gráfico</p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-fuchsia-300">
-                  y Animación
-                </p>
-              </div>
-            </div>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-400">
-              Portal oficial de la Licenciatura en Diseño Gráfico y Animación. Transforma ideas en
-              experiencias visuales y construye tu carrera creativa con nosotros.
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_repeat(4,1fr)]">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <BrandLogo inverse />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-blue-100/80">
+              Portal oficial de la Licenciatura en Diseño Gráfico y Animación. Formamos profesionales capaces de transformar ideas creativas en experiencias visuales con tecnología, industria y comunidad.
             </p>
-            {/* Redes sociales */}
-            <div className="mt-6 flex gap-2.5">
+            <div className="mt-6 space-y-3 text-sm text-blue-100/80">
+              <a href={`mailto:${contactInfo.email}`} className="flex items-start gap-3 transition-colors hover:text-secondary">
+                <Mail className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                {contactInfo.email}
+              </a>
+              <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition-colors hover:text-secondary">
+                <Phone className="size-4 shrink-0 text-secondary" aria-hidden />
+                {contactInfo.phone}
+              </a>
+              <p className="flex items-start gap-3">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                {contactInfo.address}
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
               {contactInfo.social.map((social) => (
                 <a
                   key={social.name}
@@ -73,27 +83,24 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-400 ring-1 ring-white/10 transition-all hover:bg-gradient-to-br hover:from-violet-600 hover:to-fuchsia-600 hover:text-white hover:-translate-y-0.5"
+                  className="flex size-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-blue-100 transition-all hover:-translate-y-0.5 hover:border-secondary/30 hover:bg-secondary hover:text-primary"
                 >
-                  <Icon name={social.icon} className="h-4 w-4" />
+                  <Icon name={social.icon} className="size-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Columnas de enlaces */}
-          {footerColumns.map((col) => (
-            <nav key={col.title} aria-label={col.title}>
-              <h3 className="font-display text-sm font-bold uppercase tracking-[0.16em] text-white">
-                {col.title}
-              </h3>
+          {footerColumns.map((column) => (
+            <nav key={column.title} aria-label={column.title}>
+              <h2 className="font-display text-sm font-bold uppercase tracking-[0.14em] text-white">{column.title}</h2>
               <ul className="mt-5 space-y-3">
-                {col.links.map((link) => (
+                {column.links.map((link) => (
                   <li key={link.label}>
                     <button
                       type="button"
                       onClick={() => goTo(link.href)}
-                      className="text-sm text-slate-400 transition-all hover:translate-x-1 hover:text-fuchsia-300 cursor-pointer"
+                      className="text-left text-sm text-blue-100/75 transition-colors hover:text-secondary focus-visible:text-secondary"
                     >
                       {link.label}
                     </button>
@@ -104,20 +111,19 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Barra inferior */}
         <div className="mt-12 flex flex-col items-center justify-between gap-5 border-t border-white/10 pt-7 sm:flex-row">
-          <p className="text-center text-[13px] text-slate-500 sm:text-left">
+          <p className="text-center text-xs text-blue-100/60 sm:text-left">
             © {year} Universidad — Licenciatura en Diseño Gráfico y Animación. Todos los derechos reservados.
           </p>
-          <button
+          <Button
             type="button"
+            variant="inverse"
+            size="sm"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            aria-label="Volver arriba"
-            className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-300 transition-all hover:bg-white/10 hover:text-white cursor-pointer"
           >
             Volver arriba
-            <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" aria-hidden />
-          </button>
+            <ArrowUp className="size-3.5" aria-hidden />
+          </Button>
         </div>
       </div>
     </footer>

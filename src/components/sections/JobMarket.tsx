@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
-import { careerAreas } from "@/lib/mockData";
+import { careerAreas, jobMarketSummary } from "@/lib/mockData";
 import { Icon } from "@/components/shared/Icon";
 import { SectionTitle } from "@/components/shared/SectionTitle";
 
@@ -13,6 +13,7 @@ import { SectionTitle } from "@/components/shared/SectionTitle";
 export function JobMarket() {
   return (
     <section
+      id="mercado-laboral"
       className="relative overflow-hidden bg-ink-950 py-20 text-white md:py-28"
       aria-label="Mercado laboral"
     >
@@ -82,7 +83,8 @@ export function JobMarket() {
         >
           <div className="text-center md:text-left">
             <p className="font-display text-2xl font-bold md:text-3xl">
-              87<span className="text-fuchsia-400">%</span> de empleabilidad
+              {jobMarketSummary.employability}
+              <span className="text-fuchsia-400">%</span> de empleabilidad
             </p>
             <p className="mt-1 max-w-lg text-sm text-slate-300">
               Nuestros egresados se insertan laboralmente en promedio antes de los 6 meses
@@ -91,8 +93,8 @@ export function JobMarket() {
           </div>
           <div className="flex gap-10">
             {[
-              { v: "15", l: "Áreas profesionales" },
-              { v: "+12", l: "Convenios industriales" },
+              { v: `${jobMarketSummary.professionalAreas}`, l: "Áreas profesionales" },
+              { v: `+${jobMarketSummary.industryPartners}`, l: "Convenios industriales" },
             ].map((s) => (
               <div key={s.l} className="text-center">
                 <p className="font-display text-3xl font-bold text-gradient">{s.v}</p>

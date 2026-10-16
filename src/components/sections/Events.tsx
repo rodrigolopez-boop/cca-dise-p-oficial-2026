@@ -1,15 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Clock, CalendarDays } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
 import { events } from "@/lib/mockData";
 import type { EventCategory } from "@/types";
-import { SectionTitle } from "@/components/shared/SectionTitle";
-import { FilterChips } from "@/components/shared/FilterChips";
+import { Container } from "@/components/shared/Container";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { FilterChips } from "@/components/shared/FilterChips";
 import { GradientCover } from "@/components/shared/GradientCover";
-import { Icon } from "@/components/shared/Icon";
+import { SectionShell } from "@/components/shared/SectionShell";
+import { SectionTitle } from "@/components/shared/SectionTitle";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const categoryOptions: { value: EventCategory | "todos"; label: string }[] = [
   { value: "todos", label: "Todos" },
@@ -28,10 +32,6 @@ function formatEventDate(iso: string) {
   });
 }
 
-/**
- * Eventos y actividades del campus con filtros por tipo.
- * Datos: GET /api/eventos. Incluye estado de carga simulado (skeletons).
- */
 export function Events() {
   const [category, setCategory] = useState<(typeof categoryOptions)[number]["value"]>("todos");
 
@@ -41,12 +41,14 @@ export function Events() {
   );
 
   return (
-    <section
+    <SectionShell
       id="vida-universitaria"
-      className="relative bg-slate-50 py-20 md:py-28"
+      tone="muted"
+      className="overflow-hidden"
+      contentClassName="max-w-none p-0 px-0 sm:px-0 lg:px-0"
       aria-label="Eventos y actividades"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionTitle
           eyebrow="Vida universitaria"
           title="Eventos y"
@@ -55,7 +57,7 @@ export function Events() {
         />
 
         <div className="mb-10 flex justify-center">
-          <FilterChips options={categoryOptions} active={category} onChange={setCategory} />
+          <FilterChips options={categoryOptions} active={category} onChange={setCategory} className="justify-center" />
         </div>
 
         {filtered.length === 0 ? (
@@ -64,7 +66,7 @@ export function Events() {
             onReset={() => setCategory("todos")}
           />
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             <AnimatePresence mode="popLayout">
               {filtered.map((event) => (
                 <motion.article
@@ -74,52 +76,63 @@ export function Events() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.94 }}
                   transition={{ duration: 0.38 }}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-soft-lg"
+                  className="group h-full"
                 >
-                  <GradientCover
-                    gradient={event.gradient}
-                    icon={event.icon}
-                    variant="rings"
-                    className="h-44 w-full"
-                  />
-                  <div className="flex flex-1 flex-col p-5">
-                    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-violet-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-violet-700 ring-1 ring-violet-100">
-                      <Icon name={categoryOptions.find((c) => c.value === event.category)?.label === event.category ? "Sparkles" : "Tag"} className="hidden" />
-                      {categoryOptions.find((c) => c.value === event.category)?.label}
-                    </span>
-                    <h3 className="mt-3 font-display text-[16px] font-bold leading-snug text-ink-900 group-hover:text-violet-700 transition-colors">
-                      {event.title}
-                    </h3>
-                    <div className="mt-3 space-y-1.5 text-[13px] text-slate-500">
-                      <p className="flex items-center gap-2">
-                        <CalendarDays className="h-3.5 w-3.5 shrink-0 text-fuchsia-500" aria-hidden />
-                        {formatEventDate(event.date)}
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <Clock className="h-3.5 w-3.5 shrink-0 text-violet-500" aria-hidden />
-                        {event.time}
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <MapPin className="h-3.5 w-3.5 shrink-0 text-orange-500" aria-hidden />
-                        {event.place}
-                      </p>
+                  <Card className="h-full gap-0 overflow-hidden rounded-2xl border-border/80 bg-card p-0 shadow-card transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 group-hover:shadow-card-hover">
+                    <GradientCover
+                      gradient={event.gradient}
+                      icon={event.icon}
+                      variant="rings"
+                      className="h-44 w-full rounded-none"
+                    />
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <Badge
+                          variant="outline"
+                          className="border-secondary/40 bg-secondary/15 text-primary dark:bg-secondary/15 dark:text-secondary"
+                        >
+                          {categoryOptions.find((c) => c.value === event.category)?.label}
+                        </Badge>
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Campus creativo</span>
+                      </div>
+                      <h3 className="mt-4 font-display text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-primary dark:group-hover:text-secondary">
+                        {event.title}
+                      </h3>
+                      <dl className="mt-4 grid gap-2.5 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-surface-soft text-primary dark:bg-dark-surface dark:text-secondary" aria-hidden>
+                            <CalendarDays className="size-4" />
+                          </span>
+                          <dt className="sr-only">Fecha</dt>
+                          <dd>{formatEventDate(event.date)}</dd>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-surface-soft text-primary dark:bg-dark-surface dark:text-secondary" aria-hidden>
+                            <Clock className="size-4" />
+                          </span>
+                          <dt className="sr-only">Horario</dt>
+                          <dd>{event.time}</dd>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-surface-soft text-primary dark:bg-dark-surface dark:text-secondary" aria-hidden>
+                            <MapPin className="size-4" />
+                          </span>
+                          <dt className="sr-only">Lugar</dt>
+                          <dd>{event.place}</dd>
+                        </div>
+                      </dl>
+                      <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{event.description}</p>
+                      <Button type="button" variant="outline" className="mt-5 w-full cursor-pointer">
+                        Ver detalles
+                      </Button>
                     </div>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
-                      {event.description}
-                    </p>
-                    <button
-                      type="button"
-                      className="mt-5 inline-flex w-full items-center justify-center rounded-full border border-slate-200 py-2.5 text-sm font-semibold text-ink-900 transition-all hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 cursor-pointer"
-                    >
-                      Ver detalles
-                    </button>
-                  </div>
+                  </Card>
                 </motion.article>
               ))}
             </AnimatePresence>
           </div>
         )}
-      </div>
-    </section>
+      </Container>
+    </SectionShell>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { getBrandGradient } from "@/lib/brand";
 
 interface AvatarProps {
   initials: string;
@@ -9,17 +10,16 @@ interface AvatarProps {
   className?: string;
 }
 
-/** Avatar reutilizable con iniciales sobre gradiente de marca. */
 export function Avatar({ initials, gradient, size = "md", className }: AvatarProps) {
   return (
     <div
       aria-hidden
       className={cn(
-        "relative flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br font-display font-bold text-white shadow-soft select-none",
-        gradient,
-        size === "md" && "h-12 w-12 text-base",
-        size === "lg" && "h-16 w-16 text-xl",
-        size === "xl" && "h-20 w-20 text-2xl",
+        "relative flex shrink-0 select-none items-center justify-center rounded-2xl bg-gradient-to-br font-display font-bold text-white shadow-card",
+        getBrandGradient(gradient),
+        size === "md" && "size-12 text-base",
+        size === "lg" && "size-16 text-xl",
+        size === "xl" && "size-20 text-2xl",
         className
       )}
     >

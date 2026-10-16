@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/shared/ThemeProvider";
+import { Toaster as AppToaster } from "@/components/ui/sonner";
 
 const displayFont = Space_Grotesk({
-  variable: "--font-display",
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 const bodyFont = Inter({
-  variable: "--font-body",
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -30,9 +31,6 @@ export const metadata: Metadata = {
     "UX/UI",
   ],
   authors: [{ name: "Universidad — Diseño Gráfico y Animación" }],
-  icons: {
-    icon: "/logo.svg",
-  },
   openGraph: {
     title: "Diseño Gráfico y Animación | Portal de la Carrera",
     description:
@@ -49,11 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body
-        className={`${displayFont.variable} ${bodyFont.variable} font-sans antialiased bg-background text-foreground`}
-      >
-        {children}
-        <Toaster />
+      <body className={`${displayFont.variable} ${bodyFont.variable} font-sans antialiased`}>
+        <ThemeProvider>
+          {children}
+          <AppToaster closeButton position="top-right" richColors />
+        </ThemeProvider>
       </body>
     </html>
   );
