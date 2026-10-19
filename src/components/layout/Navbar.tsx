@@ -21,19 +21,19 @@ import {
 const primaryLinks = [
   { label: "Inicio", href: "#inicio" },
   { label: "Oferta académica", href: "/oferta-academica" },
-  { label: "Cursos", href: "#plan-estudios" },
-  { label: "Carreras", href: "#carrera" },
-  { label: "Recursos", href: "#calendario" },
-  { label: "Nosotros", href: "#docentes" },
+  { label: "Cursos", href: "/cursos" },
+  { label: "Carreras", href: "/carreras" },
+  { label: "Recursos", href: "/recursos" },
+  { label: "Nosotros", href: "/nosotros" },
 ];
 
 const moreLinks = [
-  { label: "Convocatorias", href: "#convocatorias" },
-  { label: "Vida universitaria", href: "#vida-universitaria" },
-  { label: "Estudiantes", href: "#estudiantes" },
-  { label: "Noticias", href: "#noticias" },
-  { label: "Becas", href: "#becas" },
-  { label: "Titulación", href: "#titulacion" },
+  { label: "Convocatorias", href: "/cursos" },
+  { label: "Vida universitaria", href: "/recursos" },
+  { label: "Estudiantes", href: "/nosotros" },
+  { label: "Noticias", href: "/recursos" },
+  { label: "Becas", href: "/nosotros" },
+  { label: "Titulación", href: "/nosotros" },
   { label: "Contacto", href: "#contacto" },
 ];
 
