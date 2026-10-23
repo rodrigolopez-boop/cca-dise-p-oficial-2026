@@ -17,6 +17,7 @@ export function BrandLogo({
         src={logo}
         alt="CCA Logo"
         unoptimized
+        loading="eager"
         className={cn(
           "w-auto object-contain",
           compact ? "h-8" : "h-11",

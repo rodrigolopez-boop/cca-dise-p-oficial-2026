@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
+import { Preloader } from "@/components/shared/Preloader";
 import { Toaster as AppToaster } from "@/components/ui/sonner";
 
 const displayFont = Space_Grotesk({
@@ -49,6 +50,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${displayFont.variable} ${bodyFont.variable} font-sans antialiased`}>
         <ThemeProvider>
+          <Preloader />
           {children}
           <AppToaster closeButton position="top-right" richColors />
         </ThemeProvider>
