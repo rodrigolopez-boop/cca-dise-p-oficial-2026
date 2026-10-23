@@ -211,8 +211,14 @@ export const calls: Call[] = [
 /* ------------------------------------------------------------------ */
 /* GET /api/eventos                                                    */
 /* ------------------------------------------------------------------ */
+const facebookDayWomanResults =
+  "https://www.facebook.com/permalink.php?story_fbid=pfbid04578R5gfhCUWLndiasogz8j1c8eoWRgiJ9pKYJ2pkqJ4YityeEt4JaAfqagicGdPl&id=61594285719177";
+const facebookDayWomanRecap =
+  "https://www.facebook.com/permalink.php?story_fbid=pfbid0nRgKDth8SP7KcfnvDe8kfwEYJZhqU99qayZ88iywPwHtY8K74CAJk8vHmZwAfFVTl&id=61594285719177";
+
 export const events: CampusEvent[] = [
   { id: "e1", title: "Workshop de Animación 3D", date: "2026-10-08", time: "16:00 - 19:00", place: "Laboratorio de Producción Digital", description: "Intensivo de modelado y render con Blender impartido por estudio invitado. Cupo limitado a 25 participantes.", category: "talleres", gradient: "from-violet-600 to-fuchsia-600", icon: "Boxes" },
+  { id: "e9", title: "DAY WOMAN CCA – Inspiración Creativa", date: "2026-10-14", time: "20:00 (resultados finales)", place: "No especificado", description: "Concurso de Diseño Gráfico en homenaje a la Mujer Boliviana. La primera fase se definió por votación pública y los resultados finales se anunciaron para el 14 de octubre a las 20:00.", category: "concursos", gradient: "from-fuchsia-600 to-amber-400", icon: "Trophy", sourceUrl: facebookDayWomanResults },
   { id: "e2", title: "Concurso de Cartel 'Visualiza'", date: "2026-10-15", time: "10:00 - 14:00", place: "Explanada Central", description: "Competencia anual de diseño de cartel con jurado de profesionales. Premiación y exposición de finalistas.", category: "concursos", gradient: "from-orange-500 to-rose-500", icon: "Trophy" },
   { id: "e3", title: "Exposición de Ilustración Estudiantil", date: "2026-10-20", time: "Todo el día", place: "Galería Universitaria", description: "Muestra colectiva con más de 60 piezas de ilustración digital y tradicional de estudiantes de todos los semestres.", category: "exposiciones", gradient: "from-cyan-500 to-blue-500", icon: "Image" },
   { id: "e4", title: "Conferencia: Futuro del Motion Design", date: "2026-10-28", time: "18:00 - 20:00", place: "Auditorio Principal", description: "Charla magistral con director de arte de un estudio internacional sobre tendencias de gráficos en movimiento.", category: "conferencias", gradient: "from-fuchsia-600 to-pink-600", icon: "Mic" },
@@ -230,6 +236,7 @@ export const calendarEvents: CalendarEventItem[] = [
   { id: "k2", date: "2026-09-14", title: "Periodo de inscripción en línea", category: "inscripcion" },
   { id: "k3", date: "2026-09-21", title: "Cierre de inscripción", category: "inscripcion" },
   { id: "k4", date: "2026-10-08", title: "Workshop de Animación 3D", category: "eventos" },
+  { id: "k19", date: "2026-10-14", title: "DAY WOMAN CCA – Resultados finales", category: "eventos" },
   { id: "k5", date: "2026-10-15", title: "Concurso de Cartel 'Visualiza'", category: "eventos" },
   { id: "k6", date: "2026-10-19", title: "Evaluaciones parciales", category: "examenes" },
   { id: "k7", date: "2026-10-23", title: "Fin de evaluaciones parciales", category: "examenes" },
@@ -251,6 +258,36 @@ export const calendarEvents: CalendarEventItem[] = [
 /* ------------------------------------------------------------------ */
 export const news: NewsItem[] = [
   {
+    id: "n0",
+    category: "Logros",
+    title: "DAY WOMAN CCA: clasificados a la segunda fase",
+    date: "2026-10-14",
+    excerpt: "El concurso de Diseño Gráfico en homenaje a la Mujer Boliviana definió a sus cinco clasificados por votación pública y anunció los resultados finales para las 20:00.",
+    content: [
+      "El Instituto Tecnológico CCA Potosí difundió los resultados de la primera fase de DAY WOMAN CCA – Inspiración Creativa, el concurso de Diseño Gráfico realizado en homenaje a la Mujer Boliviana.",
+      "De acuerdo con el afiche oficial, los cinco estudiantes que pasaron a la segunda fase por cantidad de 'likes' fueron Albin Mamani (47), Alejandra Huaranca (26), Richar Cayampi (19), Pamela Moreira (11) y Jhonatan Rodríguez (10).",
+      "La institución agradeció la participación de todos los concursantes y destacó el talento, la creatividad y el entusiasmo del grupo. '¡Sigan creando, aprendiendo y creyendo en su talento!', señaló en su publicación.",
+      "Los resultados finales de la segunda fase se anunciaron para el 14 de octubre a las 20:00. La publicación original está disponible en la página de Facebook del instituto.",
+    ],
+    gradient: "from-fuchsia-600 via-purple-600 to-amber-400",
+    featured: true,
+    sourceUrl: facebookDayWomanResults,
+  },
+  {
+    id: "n7",
+    category: "Eventos",
+    title: "Video: el proceso creativo detrás de DAY WOMAN CCA",
+    date: "2026-10-22",
+    excerpt: "Un video de 2:19 y ocho fotografías muestran el proceso creativo de los estudiantes que participaron en el concurso en honor a la Mujer Boliviana.",
+    content: [
+      "El Instituto Tecnológico CCA Potosí compartió un resumen audiovisual del concurso DAY WOMAN CCA – Inspiración Creativa, en el que participaron estudiantes de primer año de Diseño Gráfico.",
+      "El material incluye un video de 2 minutos con 19 segundos y una galería de ocho fotografías que muestran el proceso de trabajo, las técnicas y los resultados de las propuestas estudiantiles.",
+      "La publicación destaca 'el esfuerzo, el aprendizaje y la pasión' detrás de cada diseño e invita a la comunidad a comentar y reconocer el trabajo de los futuros profesionales.",
+    ],
+    gradient: "from-cyan-500 via-sky-500 to-blue-600",
+    sourceUrl: facebookDayWomanRecap,
+  },
+  {
     id: "n1",
     category: "Logros",
     title: "Estudiantes ganan concurso nacional de diseño",
@@ -263,7 +300,6 @@ export const news: NewsItem[] = [
       "Este es el tercer año consecutivo que estudiantes del programa clasifican al podio de este certamen, reafirmando la calidad de la formación basada en proyectos reales y mentorías personalizadas.",
     ],
     gradient: "from-violet-600 via-fuchsia-600 to-pink-500",
-    featured: true,
   },
   {
     id: "n2",

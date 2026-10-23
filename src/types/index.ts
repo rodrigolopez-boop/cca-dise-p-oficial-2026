@@ -40,6 +40,7 @@ export interface CampusEvent {
   category: EventCategory;
   gradient: string;
   icon: string;
+  sourceUrl?: string;
 }
 
 export type CalendarCategory =
@@ -74,6 +75,7 @@ export interface NewsItem {
   content: string[];
   gradient: string;
   featured?: boolean;
+  sourceUrl?: string;
 }
 
 export interface Promotion {

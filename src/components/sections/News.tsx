@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, CalendarDays, X } from "lucide-react";
+import { ArrowRight, CalendarDays, ExternalLink, X } from "lucide-react";
 import { news } from "@/lib/mockData";
 import type { NewsItem } from "@/types";
 import { Container } from "@/components/shared/Container";
@@ -230,6 +230,16 @@ export function News() {
                       </p>
                     ))}
                   </div>
+                  {selected.sourceUrl && (
+                    <div className="mt-6 border-t border-border/70 pt-5">
+                      <Button asChild variant="outline" className="w-full sm:w-auto">
+                        <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          Ver publicación original en Facebook
+                          <ExternalLink className="size-4" aria-hidden />
+                        </a>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </Card>
             </motion.article>

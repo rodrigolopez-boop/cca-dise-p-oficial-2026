@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { CalendarDays, Clock, ExternalLink, MapPin } from "lucide-react";
 import { events } from "@/lib/mockData";
 import type { EventCategory } from "@/types";
 import { Container } from "@/components/shared/Container";
@@ -122,9 +122,18 @@ export function Events() {
                         </div>
                       </dl>
                       <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{event.description}</p>
-                      <Button type="button" variant="outline" className="mt-5 w-full cursor-pointer">
-                        Ver detalles
-                      </Button>
+                      {event.sourceUrl ? (
+                        <Button asChild variant="outline" className="mt-5 w-full">
+                          <a href={event.sourceUrl} target="_blank" rel="noopener noreferrer">
+                            Ver publicación en Facebook
+                            <ExternalLink className="size-4" aria-hidden />
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button type="button" variant="outline" className="mt-5 w-full cursor-pointer">
+                          Ver detalles
+                        </Button>
+                      )}
                     </div>
                   </Card>
                 </motion.article>

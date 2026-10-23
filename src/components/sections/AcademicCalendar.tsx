@@ -36,7 +36,7 @@ interface Cell {
 }
 
 export function AcademicCalendar() {
-  const [viewDate, setViewDate] = useState({ year: 2026, month: 8 });
+  const [viewDate, setViewDate] = useState({ year: 2026, month: 9 });
   const [selected, setSelected] = useState<string | null>(null);
 
   const todayIso = new Date().toISOString().slice(0, 10);
