@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ConcentricSpinner } from "@/components/shared/ConcentricSpinner";
+import { BrandLogo } from "@/components/shared/BrandLogo";
 import { cn } from "@/lib/utils";
 
 const MIN_VISIBLE_MS = 1500;
@@ -80,11 +81,17 @@ export function Preloader() {
 
       <div
         className={cn(
-          "relative transition-all duration-700 ease-out",
+          "relative grid place-items-center transition-all duration-700 ease-out",
           leaving && "-translate-y-3 scale-95 opacity-0"
         )}
       >
-        <ConcentricSpinner className="h-36 w-36 sm:h-40 sm:w-40" label="Cargando el portal" />
+        <ConcentricSpinner
+          style={{ width: "clamp(12rem, 40vw, 14rem)", height: "clamp(12rem, 40vw, 14rem)" }}
+          label="Cargando el portal"
+        />
+        <div className="absolute left-1/2 top-1/2 grid h-32 w-32 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-ink-950">
+          <BrandLogo inverse height={56} />
+        </div>
       </div>
     </div>
   );

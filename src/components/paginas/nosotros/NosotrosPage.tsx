@@ -1,57 +1,45 @@
-"use client";
+import { PageLayout } from "@/components/shared/PageLayout";
+import { PageHero } from "@/components/shared/PageHero";
+import { SectionLinks, type SectionLink } from "@/components/shared/SectionLinks";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Teachers } from "@/components/sections/Teachers";
-import { Students } from "@/components/sections/Students";
-import { Graduation } from "@/components/sections/Graduation";
-import { HonorRoll } from "@/components/sections/HonorRoll";
-import { Scholarships } from "@/components/sections/Scholarships";
-import { Container } from "@/components/shared/Container";
-import { AnimatedSection } from "@/components/shared/AnimatedSection";
-
-function Hero() {
-  return (
-    <section
-      className="relative overflow-hidden bg-surface-soft pt-32 pb-14 text-foreground dark:bg-dark-background dark:text-white md:pt-36 md:pb-20"
-      aria-labelledby="nosotros-page-titulo"
-    >
-      <div className="absolute inset-0 bg-grid-light opacity-70 dark:bg-grid dark:opacity-25" aria-hidden />
-      <div className="absolute -right-24 top-10 size-80 rounded-full bg-brand-secondary/20 blur-[100px] dark:bg-primary/20" aria-hidden />
-      <div className="absolute -left-32 bottom-0 size-96 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" aria-hidden />
-      <Container className="relative">
-        <AnimatedSection className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-primary shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-blue-100">
-            Nosotros
-          </span>
-          <h1
-            id="nosotros-page-titulo"
-            className="mt-6 font-display text-4xl font-bold leading-[1.06] tracking-[-0.03em] text-primary text-balance dark:text-white sm:text-5xl lg:text-6xl"
-          >
-            Nosotros
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground dark:text-slate-300 md:text-lg">
-            Equipo docente, estudiantes, graduación, cuadro de honor y becas.
-          </p>
-        </AnimatedSection>
-      </Container>
-    </section>
-  );
-}
+const links: SectionLink[] = [
+  {
+    label: "Docentes",
+    description: "Profesionales activos de la industria creativa que forman a la nueva generación.",
+    href: "/docentes",
+  },
+  {
+    label: "Estudiantes",
+    description: "Concursos, exposiciones, clubes y proyectos de la comunidad estudiantil.",
+    href: "/estudiantes",
+  },
+  {
+    label: "Titulación",
+    description: "Requisitos, modalidades y pasos del proceso de titulación.",
+    href: "/titulacion",
+  },
+  {
+    label: "Cuadro de honor",
+    description: "Estudiantes con resultados sobresalientes y reconocimientos.",
+    href: "/cuadro-de-honor",
+  },
+  {
+    label: "Becas",
+    description: "Tipos de beca, requisitos y documentación para financiar tu formación.",
+    href: "/becas",
+  },
+];
 
 export function NosotrosPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <Teachers />
-        <Students />
-        <Graduation />
-        <HonorRoll />
-        <Scholarships />
-      </main>
-      <Footer />
-    </div>
+    <PageLayout>
+      <PageHero
+        badge="Nosotros"
+        title="Nosotros"
+        description="Docentes, estudiantes, titulación, cuadro de honor y becas, cada uno en su propia página."
+        headingId="nosotros-page-titulo"
+      />
+      <SectionLinks items={links} />
+    </PageLayout>
   );
 }

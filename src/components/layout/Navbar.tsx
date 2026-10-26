@@ -28,13 +28,13 @@ const primaryLinks = [
 ];
 
 const moreLinks = [
-  { label: "Convocatorias", href: "/cursos" },
-  { label: "Vida universitaria", href: "/recursos" },
-  { label: "Estudiantes", href: "/nosotros" },
-  { label: "Noticias", href: "/recursos" },
-  { label: "Becas", href: "/nosotros" },
-  { label: "Titulación", href: "/nosotros" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Convocatorias", href: "/convocatorias" },
+  { label: "Vida universitaria", href: "/vida-universitaria" },
+  { label: "Estudiantes", href: "/estudiantes" },
+  { label: "Noticias", href: "/noticias" },
+  { label: "Becas", href: "/becas" },
+  { label: "Titulación", href: "/titulacion" },
+  { label: "Contacto", href: "/contacto" },
 ];
 
 export function Navbar() {
@@ -194,10 +194,12 @@ export function Navbar() {
                 {moreLinks.map((link) => (
                   <DropdownMenuItem
                     key={link.href}
-                    onSelect={() => goTo(link.href)}
+                    asChild
                     className="cursor-pointer rounded-lg px-3 py-2.5 font-medium"
                   >
-                    {link.label}
+                    <Link href={link.href} onClick={() => setMenuOpen(false)}>
+                      {link.label}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

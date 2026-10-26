@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 type Ring = {
@@ -33,9 +33,11 @@ const circumference = (radius: number) => 2 * Math.PI * radius;
 
 export function ConcentricSpinner({
   className,
+  style,
   label = "Cargando",
 }: {
   className?: string;
+  style?: CSSProperties;
   label?: string;
 }) {
   const ringGroups = useRef<Array<SVGGElement | null>>([]);
@@ -103,6 +105,7 @@ export function ConcentricSpinner({
     <svg
       viewBox={`0 0 ${SIZE} ${SIZE}`}
       className={cn("block h-auto w-40", className)}
+      style={style}
       role="img"
       aria-label={label}
     >

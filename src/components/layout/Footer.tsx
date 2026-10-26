@@ -57,7 +57,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_repeat(4,1fr)]">
           <div className="sm:col-span-2 lg:col-span-1">
-            <BrandLogo inverse />
+            <BrandLogo inverse height={56} />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-blue-100/80">
               Portal oficial de la Licenciatura en Diseño Gráfico y Animación. Formamos profesionales capaces de transformar ideas creativas en experiencias visuales con tecnología, industria y comunidad.
             </p>
